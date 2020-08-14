@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import PreviewColourBox from "./../Components/previewColourBox";
 
-const COLORS = [
+const SOLARIZED = [
   { colorName: "Base03", hexCode: "#002b36" },
   { colorName: "Base02", hexCode: "#073642" },
   { colorName: "Base01", hexCode: "#586e75" },
@@ -43,80 +43,44 @@ const RAINBOW = [
   { colorName: "Violet", hexCode: "#8B00FF" },
 ];
 
+const COLOR_PALETTES = [
+  { paletteName: "Solarized", colors: SOLARIZED },
+  { paletteName: "Frontend Masters", colors: FRONTEND_MASTERS },
+  { paletteName: "Rainbow", colors: RAINBOW },
+];
+
 function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("ColourPalette", {
-            headerName: "Solarize",
-            COLORS: COLORS,
-          });
-        }}
-        style={styles.element}
-      >
-        <View>
-          <Text style={styles.textStyle}>Solarize</Text>
-        </View>
-        <View>
-          <FlatList
-            data={COLORS.slice(0, 5)}
-            numColumns={5}
-            keyExtractor={(item) => item.hexCode}
-            renderItem={({ item }) => (
-              <PreviewColourBox colourHex={item.hexCode} />
-            )}
-          />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("ColourPalette", {
-            headerName: "Frontend Masters",
-            COLORS: FRONTEND_MASTERS,
-          });
-        }}
-        style={styles.element}
-      >
-        <View>
-          <Text style={styles.textStyle}>Frontend Masters</Text>
-        </View>
-        <View>
-          <FlatList
-            data={FRONTEND_MASTERS.slice(0, 6)}
-            numColumns={5}
-            keyExtractor={(item) => item.hexCode}
-            renderItem={({ item }) => (
-              <PreviewColourBox colourHex={item.hexCode} />
-            )}
-          />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => {
-          navigation.navigate("ColourPalette", {
-            headerName: "Rainbow",
-            COLORS: RAINBOW,
-          });
-        }}
-        style={styles.element}
-      >
-        <View>
-          <Text style={styles.textStyle}>Rainbow</Text>
-        </View>
-        <View>
-          <FlatList
-            data={RAINBOW.slice(0, 6)}
-            numColumns={5}
-            keyExtractor={(item) => item.hexCode}
-            renderItem={({ item }) => (
-              <PreviewColourBox colourHex={item.hexCode} />
-            )}
-          />
-        </View>
-      </TouchableOpacity>
+      <FlatList
+        data={COLOR_PALETTES}
+        keyExtractor={(item) => item.paletteName}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ColourPalette", {
+                headerName: item.paletteName,
+                COLORS: item.colors,
+              });
+            }}
+            style={styles.element}
+          >
+            <View>
+              <Text style={styles.textStyle}>{item.paletteName}</Text>
+            </View>
+            <View>
+              <FlatList
+                data={item.colors.slice(0, 5)}
+                numColumns={5}
+                keyExtractor={(item) => item.hexCode}
+                renderItem={({ item }) => (
+                  <PreviewColourBox colourHex={item.hexCode} />
+                )}
+              />
+            </View>
+          </TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
