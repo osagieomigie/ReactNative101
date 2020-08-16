@@ -33,6 +33,7 @@ function App() {
         <RootStack.Screen
           name="ColourPaletteModal"
           component={ColourPaletteModal}
+          options={{ title: "Add a colour scheme" }}
         />
       </RootStack.Navigator>
     </NavigationContainer>

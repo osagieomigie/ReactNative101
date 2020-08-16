@@ -79,7 +79,7 @@ function Home({ navigation }) {
               navigation.navigate("ColourPaletteModal");
             }}
           >
-            <Text>Launch Modal</Text>
+            <Text style={styles.modal}>Add a colour scheme</Text>
           </TouchableOpacity>
         }
       />
@@ -96,6 +96,13 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     fontWeight: "bold",
+  },
+  modal: {
+    marginVertical: 5,
+    color: "blue",
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 18,
   },
 });
 
