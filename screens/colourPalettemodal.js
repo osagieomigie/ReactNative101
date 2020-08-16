@@ -8,7 +8,7 @@ import {
   FlatList,
   SafeAreaView,
 } from "react-native";
-import SwitchComponent from "./switch";
+import SwitchComponent from "../Components/switch";
 
 const COLORS = [
   { colorName: "AliceBlue", hexCode: "#F0F8FF" },
