@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
-  RefreshControl,
 } from "react-native";
 import PreviewColourBox from "./../Components/previewColourBox";
 
@@ -74,6 +73,15 @@ function Home({ navigation }) {
         )}
         refreshing={isRefreshing}
         onRefresh={handleRefresh}
+        ListHeaderComponent={
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("ColourPaletteModal");
+            }}
+          >
+            <Text>Launch Modal</Text>
+          </TouchableOpacity>
+        }
       />
     </View>
   );
