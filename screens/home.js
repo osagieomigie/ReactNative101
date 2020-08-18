@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import PreviewColourBox from "./../Components/previewColourBox";
 
-function Home({ navigation }) {
+function Home({ navigation, route }) {
   const [colourResp, setColourResp] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const newColour = route.params ? route.params.newColour : undefined; // when there arent any new colours
   const getColours = useCallback(async () => {
     await fetch("https://color-palette-api.kadikraman.now.sh/palettes")
       .then((res) =>
@@ -41,6 +42,12 @@ function Home({ navigation }) {
   useEffect(() => {
     getColours();
   }, []);
+
+  useEffect(() => {
+    if (newColour) {
+      setColourResp((result) => [newColour, ...result]);
+    }
+  }, [newColour]);
   return (
     <View style={styles.container}>
       <FlatList

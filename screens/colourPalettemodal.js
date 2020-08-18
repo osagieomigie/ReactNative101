@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   Button,
   FlatList,
   SafeAreaView,
+  Alert,
 } from "react-native";
 import SwitchComponent from "../Components/switch";
 
@@ -160,9 +161,30 @@ const COLORS = [
   { colorName: "YellowGreen", hexCode: "#9ACD" },
 ];
 
-function ColourPaletteModal() {
+function ColourPaletteModal({ navigation }) {
   const [paletteName, setPaletteName] = useState("");
   const [selectedColours, setSelectedColours] = useState([]);
+  let newColours = [];
+
+  const addNewColours = () => {
+    if (!paletteName) {
+      Alert.alert("Enter palette name first");
+    } else {
+      selectedColours.forEach((elem) => {
+        const found = COLORS.find((e) => e.colorName === elem);
+        if (typeof found !== "undefined") {
+          newColours.push(found);
+        }
+      });
+
+      // add new colour way to array
+      if (newColours.length !== 0) {
+        navigation.navigate("Home", {
+          newColour: { paletteName: paletteName, colors: newColours },
+        });
+      }
+    }
+  };
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -179,14 +201,19 @@ function ColourPaletteModal() {
           renderItem={({ item }) => (
             <View style={styles.toggleBox}>
               <Text style={styles.toggleBoxName}> {item.colorName}</Text>
-              <SwitchComponent />
+              <SwitchComponent
+                selectedColours={selectedColours}
+                setSelectedColours={setSelectedColours}
+                colorName={item.colorName}
+                hexCode={item.hexCode}
+              />
             </View>
           )}
           style={styles.listStyle}
         />
         <View style={styles.button}>
           <Button
-            // onPress={}
+            onPress={addNewColours}
             color="#FFFFFF"
             style={styles.button}
             title="Submit!"
@@ -229,5 +256,4 @@ const styles = StyleSheet.create({
     marginRight: "auto",
   },
 });
-
 export default ColourPaletteModal;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Home from "./screens/home";
 import ColourPalette from "./screens/colourPalette";
 import ColourPaletteModal from "./screens/colourPalettemodal";
