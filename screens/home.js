@@ -11,6 +11,7 @@ import PreviewColourBox from "./../Components/previewColourBox";
 function Home({ navigation, route }) {
   const [colourResp, setColourResp] = useState([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [addColours, setAddColours] = useState([]);
   const newColour = route.params ? route.params.newColour : undefined; // when there arent any new colours
   const getColours = useCallback(async () => {
     await fetch("https://color-palette-api.kadikraman.now.sh/palettes")
@@ -31,7 +32,8 @@ function Home({ navigation, route }) {
       .then((res) =>
         res.json().then((result) => {
           if (res.status === 200) {
-            setColourResp(result);
+            // console.log(addColours);
+            setColourResp([...addColours, ...result]); // add
           }
         })
       )
@@ -45,6 +47,8 @@ function Home({ navigation, route }) {
 
   useEffect(() => {
     if (newColour) {
+      setAddColours((colour) => [...colour, newColour]);
+      //addColours.push(newColour);
       setColourResp((result) => [newColour, ...result]);
     }
   }, [newColour]);

@@ -251,6 +251,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: "grey",
     paddingVertical: 8,
+    alignItems: "center",
   },
   toggleBoxName: {
     marginRight: "auto",
